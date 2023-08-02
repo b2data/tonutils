@@ -1,6 +1,6 @@
 {
   "name": "tonutils",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A comprehensive toolkit for working with the TON (The Open Network) protocols.",
   "keywords": [
     "ton",
