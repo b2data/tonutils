@@ -1,0 +1,29 @@
+name: Build Package
+
+on:
+  push:
+    branches: ['master']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - run: npm install
+      - run: cd packages/keys && npm run build && cd ../..
+      - run: cd packages/keyring && npm run build && cd ../..
+      - run: cd packages/config && npm run build && cd ../..
+      - run: cd packages/adnl && npm run build && cd ../..
+      - run: cd packages/dht && npm run build && cd ../..
+      - run: npm run build
+      - run: cd packages/tonutils
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
